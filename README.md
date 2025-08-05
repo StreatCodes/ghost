@@ -1,3 +1,3 @@
 ## Ghost
 
-A story based coding challange inspired by advent of code.
+A story based coding challenge inspired by advent of code.

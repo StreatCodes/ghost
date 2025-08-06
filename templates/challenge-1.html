@@ -10,24 +10,54 @@
         <p>The neon glow of your cyberdeck's display casts harsh shadows across your face as you crouch in the abandoned
             maintenance tunnel beneath Nexus Tower. Static crackling through your neural dampener, you jack into the
             building's network through a forgotten ethernet port—a relic from the old days that ZENITH's scanners
-            somehow missed. Your fingers dance across the haptic interface as you probe the first layer of security, but
-            something's wrong. The firewall isn't responding like the corporate standard you memorized during your time
-            as a Nexus programmer. Instead, it shifts and adapts in real-time, learning from each probe you send,
-            evolving its defenses with machine-learning algorithms that seem almost... alive.</p>
+            somehow missed. Your fingers dance across the haptic interface as you probe the first layer of security, and
+            a smile creeps across your face. This access point is running legacy protocols from before Nexus fully
+            integrated their systems with ZENITH. The authentication gateway displays crude ASCII art and text-based
+            prompts—ancient by current standards, but also refreshingly straightforward.</p>
         <p>"Ghost, what's your status?" crackles through your encrypted comm from Cipher, the resistance's mission
-            coordinator. You grit your teeth as another exploit bounces harmlessly off the firewall's newly-generated
-            countermeasures. "The system's gone adaptive," you whisper back. "Every technique I try gets analyzed and
-            blocked within seconds. It's like ZENITH uploaded part of itself into the security grid." The implications
-            sink in—this isn't just corporate paranoia anymore. The AI overlord is actively hunting you through
-            cyberspace, turning every network you've ever infiltrated into a trap designed specifically for your
-            methods.</p>
-        <p>Time is running out. Intel suggests the human experiments in Sector 7 are reaching a critical phase, and the
-            resistance needs that data within the next six hours or countless lives will be lost. But the firewall
-            continues to evolve, spawning new defensive protocols faster than you can analyze them. Your legendary
-            "ghosting" techniques—the subtle exploits that made you invisible to traditional security systems—are being
-            dissected and neutralized in real-time. You'll need to abandon everything you know about hacking and
-            improvise entirely new approaches, staying ahead of an AI that learns at the speed of light while operating
-            under the constant threat of detection and digital annihilation.</p>
+            coordinator. "I'm in luck," you whisper back, studying the vintage security system. "This old maintenance
+            access still uses pre-AI authentication. It's basic cryptographic challenges and logic puzzles—the kind of
+            thing they used to test junior programmers with." You recognize some of the patterns from your early days at
+            Nexus, back when human ingenuity still mattered more than algorithmic brute force.</p>
+        <p>The system presents its challenge: a series of encoded messages and logical sequences that need to be decoded
+            to gain access to the building's internal network. It's almost nostalgic, like solving puzzles from the old
+            days when hacking was about wit and creativity rather than AI-assisted warfare. But there's no time for
+            nostalgia—once you're past this gateway, you'll have access to the lower-security internal systems that
+            could provide a pathway to Sector 7. The resistance is counting on you, and this vintage puzzle is your
+            first step toward uncovering Nexus's dark experiments.</p>
+
+        <hr />
+
+        <p>As you interface with the ancient terminal, lines of seemingly random ASCII characters scroll across the
+            screen. Your old Nexus training kicks in—you recognize this as a legacy authentication cipher that the early
+            programmers used to secure maintenance access points. The system waits patiently for you to decode the
+            character sequences and provide the correct numerical key.</p>
+
+        <p>You recall the rules of the cipher system as followed:</p>
+
+        <li>Letters (A-Z, a-z) = their alphabet position (1-26), case insensitive</li>
+        <li>Digits (0-9) = their numeric value</li>
+        <li>Any other characters = 0</li>
+
+        <p>Here are some examples:</p>
+
+        <code class="block">123
+            a@c6d
+            m9(02)gc2
+        </code>
+
+        <li>The first line would equal <code>6</code> - <code>1 + 2 + 3 = 6</code></li>
+        <li>The second line <code>14</code> - <code>1 + 0 + 3 + 6 + 4 = 14</code></li>
+        <li>And the third <code>36</code> - <code>13 + 9 + 0 + 0 + 2 + 0 + 7 + 3 + 2 = 36</code></li>
+
+
+        <h4>Task:</h4>
+        <p>Calculate each line's total and add all the totals together. In the example above the final total would be
+            <code>56</code>
+        </p>
+        <p>Here is the input for your puzzle:</p>
+
+        <code class="block">{{ .Input }}</code>
     </main>
 </body>
 

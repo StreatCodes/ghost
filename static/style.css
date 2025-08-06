@@ -20,11 +20,13 @@ body {
   font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
   background-color: #222;
   color: rgb(216, 216, 216);
+  line-height: 1.5;
 }
 
 main {
   max-width: 800px;
-  margin: 40px auto;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 a:link,
@@ -38,4 +40,29 @@ a:visited {
 
 h2 {
   color: rgb(201, 79, 79);
+}
+
+li {
+  margin-left: 1.5em;
+}
+
+hr {
+  border: 0;
+  border-bottom: 1px solid rgb(171, 171, 171);
+  margin: 20px 0;
+}
+
+code {
+  border-radius: 4px;
+  background-color: rgb(19, 19, 19);
+  border: solid 1px rgb(65, 65, 65);
+  white-space: pre-line;
+  padding: 2px 4px;
+
+  &.block {
+    border-radius: 8px;
+    display: block;
+    padding: 10px;
+    margin-bottom: 1em;
+  }
 }

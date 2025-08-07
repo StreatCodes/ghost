@@ -40,14 +40,14 @@ func (service *Service) handleNewSession(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	sessionId, err := newSession()
+	session, err := newSession()
 	if err != nil {
 		log.Fatalf("Error creating session: %s\n", err)
 	}
 
 	cookie := &http.Cookie{
 		Name:  "session",
-		Value: sessionId,
+		Value: session.IDString(),
 	}
 	http.SetCookie(w, cookie)
 	http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
@@ -79,8 +79,10 @@ func (service *Service) handleChallenge(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
+	templateData := generateChallengeInput(challengeID, [32]byte(session.ID))
+
 	challengeTemplate := fmt.Sprintf("challenge-%d.html", challengeID)
-	err = service.template.ExecuteTemplate(w, challengeTemplate, nil)
+	err = service.template.ExecuteTemplate(w, challengeTemplate, templateData)
 	if err != nil {
 		log.Fatalf("Err executing template %s\n", err)
 	}

@@ -11,8 +11,13 @@ import (
 )
 
 type Session struct {
+	ID []byte `json:"-"`
 	// The level the user has unlocked
 	Level int
+}
+
+func (session Session) IDString() string {
+	return hex.EncodeToString(session.ID)
 }
 
 func loadSession(sessionId string) (*Session, error) {
@@ -27,6 +32,12 @@ func loadSession(sessionId string) (*Session, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	session.ID, err = hex.DecodeString(sessionId)
+	if err != nil {
+		return nil, err
+	}
+
 	return &session, err
 }
 
@@ -67,17 +78,16 @@ func getSession(cookies []*http.Cookie) *Session {
 	return nil
 }
 
-func newSession() (string, error) {
-	randomBytes := make([]byte, 32)
-	_, _ = rand.Read(randomBytes)
+func newSession() (*Session, error) {
+	session := Session{Level: 1, ID: make([]byte, 32)}
+	_, _ = rand.Read(session.ID)
 
-	sessionId := hex.EncodeToString(randomBytes)
-	file, err := os.Create("./sessions/" + sessionId)
+	file, err := os.Create("./sessions/" + session.IDString())
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	defer file.Close()
 
 	json.NewEncoder(file).Encode(Session{Level: 1})
-	return sessionId, nil
+	return &session, nil
 }

@@ -25,6 +25,8 @@ func main() {
 	http.HandleFunc("GET /intro", service.handleIntro)
 	http.HandleFunc("GET /new-session", service.handleNewSession)
 	http.HandleFunc("GET /challenge/{challengeID}", service.handleChallenge)
+	http.HandleFunc("GET /challenge/{challengeID}/input", service.handleChallengeInput)
+	http.HandleFunc("POST /challenge/{challengeID}", service.handleChallengeAnswer)
 
 	log.Println("Server starting on port 8080...")
 	err = http.ListenAndServe(":8080", nil)

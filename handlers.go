@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 )
 
 func (service *Service) handleIndex(w http.ResponseWriter, r *http.Request) {
@@ -63,27 +62,75 @@ func (service *Service) handleChallenge(w http.ResponseWriter, r *http.Request) 
 	}
 
 	challengeIDText := r.PathValue("challengeID")
-	challengeID, err := strconv.Atoi(challengeIDText)
+	challengeID, err := validChallenge(*session, challengeIDText)
 	if err != nil {
-		//TODO bad challange, just 404
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
 
-	if challengeID > session.Level {
-		//TODO don't have access to that challenge yet
+	challengeTemplate := fmt.Sprintf("challenge-%d.html", challengeID)
+	err = service.template.ExecuteTemplate(w, challengeTemplate, nil)
+	if err != nil {
+		log.Fatalf("Err executing template %s\n", err)
+	}
+}
+
+// Basic endpoint to display the users input for the given challenge
+func (service *Service) handleChallengeInput(w http.ResponseWriter, r *http.Request) {
+	session := getSession(r.Cookies())
+	if session == nil {
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
 
-	if challengeID < 1 || challengeID > 20 {
-		//TODO bad challenge 404
+	challengeIDText := r.PathValue("challengeID")
+	challengeID, err := validChallenge(*session, challengeIDText)
+	if err != nil {
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
 	}
 
 	templateData := generateChallengeInput(challengeID, [32]byte(session.ID))
-
-	challengeTemplate := fmt.Sprintf("challenge-%d.html", challengeID)
-	err = service.template.ExecuteTemplate(w, challengeTemplate, templateData)
+	err = service.template.ExecuteTemplate(w, "challenge-input.html", templateData)
 	if err != nil {
 		log.Fatalf("Err executing template %s\n", err)
 	}
+}
+
+// A POST endpoint to verify the user entered the correct answer
+func (service *Service) handleChallengeAnswer(w http.ResponseWriter, r *http.Request) {
+	session := getSession(r.Cookies())
+	if session == nil {
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	challengeIDText := r.PathValue("challengeID")
+	challengeID, err := validChallenge(*session, challengeIDText)
+	if err != nil {
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	err = r.ParseForm()
+	if err != nil {
+		http.Error(w, "Failed to parse form", http.StatusBadRequest)
+		return
+	}
+
+	answer := r.FormValue("answer")
+
+	correct := checkChallengeAnswer(challengeID, [32]byte(session.ID), answer)
+	if !correct {
+		//TODO make this nicer....
+		http.Error(w, "Incorrect", http.StatusBadRequest)
+		return
+	}
+
+	//TODO update the users level
+
+	http.Redirect(w, r, "/challenge/"+challengeIDText, http.StatusSeeOther)
+	//TODO add new code to previous page to indicate the challenge was successfully completed
+	// This can be accomplished by checking if the users level is greater than the viewed level
+	// append additional story?
 }

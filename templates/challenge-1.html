@@ -55,9 +55,15 @@
         <p>Calculate each line's total and add all the totals together. In the example above the final total would be
             <code>56</code>
         </p>
-        <p>Here is the input for your puzzle:</p>
+        <p><a href="/challenge/1/input">View your challenge input here.</a></p>
 
-        <code class="block">{{ .Input }}</code>
+        <form action="/challenge/1" method="post">
+            <label>
+                <p>Enter your answer here</p>
+                <input type="text" name="answer">
+                <button type="submit">Submit</button>
+            </label>
+        </form>
     </main>
 </body>
 

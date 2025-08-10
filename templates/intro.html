@@ -5,6 +5,9 @@
 
 <body>
     <main>
+        {{if .}}
+        <a href="/">&lt;back</a>
+        {{end}}
         <h2>Ghost Protocol</h2>
         <p>The year is 2087. The mega-corporation Nexus Dynamics has effectively become the shadow government of
             Neo-Tokyo, controlling everything from data flows to genetic modifications. Their AI overlord system,
@@ -16,7 +19,9 @@
             from abandoned subway tunnels beneath the city, using pre-digital technology and hardened systems to avoid
             ZENITH's detection.</p>
 
+        {{if eq . nil}}
         <a href="/new-session">Begin</a>
+        {{end}}
     </main>
 </body>
 

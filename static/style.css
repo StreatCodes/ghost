@@ -27,6 +27,7 @@ main {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  padding-bottom: 60px;
 }
 
 a:link,
@@ -65,4 +66,31 @@ code {
     padding: 10px;
     margin-bottom: 1em;
   }
+}
+
+input {
+  background-color: rgb(61, 61, 61);
+  border: solid 1px transparent;
+  border-radius: 4px;
+  padding: 8px 12px;
+  color: #eee;
+  font-size: 12pt;
+
+  &:focus {
+    border-color: rgb(198, 211, 217);
+  }
+}
+
+button {
+  background-color: rgb(61, 61, 61);
+  border: solid 1px #222;
+  border-radius: 4px;
+  padding: 8px 12px;
+  color: rgb(136, 197, 222);
+  font-size: 12pt;
+  cursor: pointer;
+}
+
+label>p {
+  margin-bottom: 4px;
 }

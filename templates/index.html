@@ -8,12 +8,16 @@
         <li>
             <a href="/intro">0. Intro</a>
         </li>
+        {{if ge .Level 1}}
         <li>
             <a href="/challenge/1">1. The Adaptive Firewall Crisis</a>
         </li>
+        {{end}}
+        {{if ge .Level 2}}
         <li>
             <a href="/challenge/2">2. TODO</a>
         </li>
+        {{end}}
     </main>
 </body>
 

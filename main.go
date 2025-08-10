@@ -11,9 +11,14 @@ type Service struct {
 }
 
 func main() {
+	err := initSessions()
+	if err != nil {
+		log.Fatalf("Failed to create sessions directory %s\n", err)
+	}
+
 	tmpl, err := template.ParseGlob("./templates/*")
 	if err != nil {
-		log.Fatalf("Error parsing templates %s", err)
+		log.Fatalf("Error parsing templates %s\n", err)
 	}
 
 	service := Service{

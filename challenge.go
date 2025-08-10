@@ -27,20 +27,12 @@ func validChallenge(session Session, challengeIDText string) (int, error) {
 	return challengeID, nil
 }
 
-type ChallengeData struct {
-	Input string
-}
-
-func generateChallengeInput(challengeId int, seed [32]byte) ChallengeData {
-	var input string
-
+func generateChallengeInput(challengeId int, seed [32]byte) string {
 	switch challengeId {
 	case 1:
-		input = challenge1Input(seed)
-	}
-
-	return ChallengeData{
-		Input: input,
+		return challenge1Input(seed)
+	default:
+		return "Error"
 	}
 }
 

@@ -26,7 +26,9 @@ func (service *Service) handleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func (service *Service) handleIntro(w http.ResponseWriter, r *http.Request) {
-	err := service.template.ExecuteTemplate(w, "intro.html", nil)
+	session := getSession(r.Cookies())
+
+	err := service.template.ExecuteTemplate(w, "intro.html", session)
 	if err != nil {
 		log.Fatalf("Err executing template %s\n", err)
 	}
@@ -69,7 +71,7 @@ func (service *Service) handleChallenge(w http.ResponseWriter, r *http.Request) 
 	}
 
 	challengeTemplate := fmt.Sprintf("challenge-%d.html", challengeID)
-	err = service.template.ExecuteTemplate(w, challengeTemplate, nil)
+	err = service.template.ExecuteTemplate(w, challengeTemplate, session)
 	if err != nil {
 		log.Fatalf("Err executing template %s\n", err)
 	}
@@ -127,10 +129,14 @@ func (service *Service) handleChallengeAnswer(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	//TODO update the users level
+	if session.Level == challengeID {
+		err = session.SetLevel(session.Level + 1)
+		if err != nil {
+			log.Println("Failed to level up player", err)
+			http.Error(w, "Error", http.StatusInternalServerError)
+			return
+		}
+	}
 
 	http.Redirect(w, r, "/challenge/"+challengeIDText, http.StatusSeeOther)
-	//TODO add new code to previous page to indicate the challenge was successfully completed
-	// This can be accomplished by checking if the users level is greater than the viewed level
-	// append additional story?
 }

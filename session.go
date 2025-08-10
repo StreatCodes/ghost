@@ -20,6 +20,20 @@ func (session Session) IDString() string {
 	return hex.EncodeToString(session.ID)
 }
 
+func (session Session) SetLevel(level int) error {
+	session.Level = level
+	return saveSession(session)
+}
+
+// Checks to see if the `sessions` directory is created, if not; create it
+func initSessions() error {
+	path := "./sessions"
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return os.Mkdir(path, 0755)
+	}
+	return nil
+}
+
 func loadSession(sessionId string) (*Session, error) {
 	file, err := os.Open("./sessions/" + sessionId)
 	if err != nil {
@@ -82,12 +96,16 @@ func newSession() (*Session, error) {
 	session := Session{Level: 1, ID: make([]byte, 32)}
 	_, _ = rand.Read(session.ID)
 
-	file, err := os.Create("./sessions/" + session.IDString())
+	err := saveSession(session)
+	return &session, err
+}
+
+func saveSession(session Session) error {
+	file, err := os.OpenFile("./sessions/"+session.IDString(), os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0644)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	defer file.Close()
 
-	json.NewEncoder(file).Encode(Session{Level: 1})
-	return &session, nil
+	return json.NewEncoder(file).Encode(session)
 }

@@ -64,6 +64,16 @@
                 <button type="submit">Submit</button>
             </label>
         </form>
+
+        {{if gt .Level 1}}
+        <hr />
+        <p>When you enter the correct authentication code, the ancient terminal responds with a satisfied beep and
+            displays "ACCESS GRANTED - MAINTENANCE LEVEL." The forgotten ethernet port comes alive with data flow,
+            granting you backdoor access to Nexus Tower's internal maintenance network - a low-security system that
+            handles building operations like elevators, ventilation, and most importantly, the service tunnels that lead
+            directly to Sector 7.</p>
+        <a href="/challenge/2">Next chapter</a>
+        {{end}}
     </main>
 </body>
 
